@@ -1,0 +1,25 @@
+# =============================================================================
+# DEVSIM TCAD 研究项目 — Python 运行依赖
+#
+# 实测环境（本仓库全部 Phase 已在此组合下端到端验证通过）：
+#   OS      : Ubuntu 26.04 LTS (WSL2, x86_64)
+#   Python  : 3.13.12 (miniconda)
+#   devsim  : 2.10.0
+#
+# 安装：
+#   python3 -m pip install -r requirements.txt
+#
+# 说明：
+#   * devsim 为求解器本体（含 python_packages 物理封装），由 PyPI 提供预编译轮子；
+#     仅当需要修改 src/ 下 C++ 引擎时才需按 BUILD.md 从源码构建。
+#   * gmsh 用于 Phase 1/3 的网格生成与导入（.geo/.msh）；Phase 5/6 使用 devsim
+#     内建 2D mesher，不强制依赖 gmsh。
+#   * scipy 仅被个别分析脚本使用；matplotlib 用于所有出图（analysis/、plot_*.py）。
+#   * 版本下限为保守值，实测版本见上方注释。
+# =============================================================================
+
+devsim==2.10.0
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+gmsh>=4.11

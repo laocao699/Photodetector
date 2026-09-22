@@ -1,0 +1,42 @@
+# =============================================================================
+# make_package.sh 的排除清单（tar --exclude-from）
+#
+# 原则：只排除「可由脚本重跑再生的大体积产物」与「版本控制/缓存元数据」，
+#       保留全部源码、文档、报告、以及复现必需的小体积数据与输入网格。
+# 实测：排除后打包体积约 40MB（未排除时 work/ 单目录即 944MB）。
+# =============================================================================
+
+# --- 版本控制元数据（含嵌套仓库的 .git，共约 21MB） ---
+./.git
+./devsim_bjt_example/.git
+
+# --- Python / 工具缓存 ---
+__pycache__
+*.pyc
+.ruff_cache
+.pytest_cache
+.mypy_cache
+.ipynb_checkpoints
+
+# --- 大体积可再生场数据（VTK / Tecplot 转储） ---
+# .vtu 共约 848MB；.tec 共约 64MB；均可由对应驱动脚本重跑再生
+*.vtu
+*.vtm
+*.visit
+*.tec
+
+# --- 运行日志与审查基线快照 ---
+./work/logs
+./work/_baseline_snapshot
+
+# --- Phase 4 write_devices 的无扩展名转储（单个达 25MB） ---
+./work/phase4_electrothermal/bjt_electrothermal
+./work/phase4_electrothermal/diode_1d_electrothermal
+
+# --- Windows 下载残留的备用数据流标记 ---
+*Zone.Identifier
+
+# --- 打包产物自身（避免自包含递归） ---
+./devsim_tcad_research_package.tar.gz
+./devsim_tcad_research_package.tar.gz.sha256
+./devsim_tcad_research_package.zip

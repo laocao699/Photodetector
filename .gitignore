@@ -1,0 +1,48 @@
+*.pyc
+external/getrf/build/
+external/SuperLU_4.3/
+examples/*/*.out
+testing/*.out
+testing/*.flps
+testing/*.vtu
+testing/*.vtm
+testing/*.visit
+testing/*.msh
+
+# Ignore generated directories
+linux*/
+
+# ===========================================================================
+# 研究工作层 work/ 的可再生仿真产物
+# 这些文件体积巨大（.vtu 共 ~848MB）且可由 work/tools/run_phase.sh 完整重跑生成，
+# 不纳入版本控制（GitHub 单文件 >50MB 告警、>100MB 拒收）。
+# 保留：.dat/.out/.png/.msh —— 小体积，是 golden 对照、出图与运行的必需数据/网格。
+# ===========================================================================
+work/**/*.vtu
+work/**/*.vtm
+work/**/*.visit
+work/**/*.tec
+work/**/*.log
+work/logs/
+work/_baseline_snapshot/
+
+# 上游 BJT 样例自带的中间产物（可由 simdir 脚本重生）
+devsim_bjt_example/simdir/*.tec
+
+# Phase 4 电热驱动的设备转储产物：write_devices(file="...", type="tecplot")
+# 输出无扩展名，单个达 25MB，可由驱动脚本重跑生成
+work/phase4_electrothermal/bjt_electrothermal
+work/phase4_electrothermal/diode_1d_electrothermal
+
+# Windows 下载残留的备用数据流标记文件
+*Zone.Identifier
+
+# Python / 工具缓存
+__pycache__/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# 打包产物（由 work/tools/make_package.sh 生成）
+devsim_tcad_research_package.tar.gz
+devsim_tcad_research_package.tar.gz.sha256
